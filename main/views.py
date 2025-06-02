@@ -33,3 +33,7 @@ def cv_list(request):
 def cv_detail(request, pk):
     cv = get_object_or_404(CV, pk=pk)
     return render(request, "main/cv_detail.html", {"cv": cv})
+
+def settings_view(request):
+    return render(request, "main/settings.html")
+

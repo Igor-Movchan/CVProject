@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}Project Settings{% endblock %}
+
+{% block content %}
+  <h1>Project Settings</h1>
+  <ul class="list-group">
+    <li class="list-group-item">
+      <strong>DEBUG:</strong> {{ DJANGO_DEBUG }}
+    </li>
+    <li class="list-group-item">
+      <strong>Allowed Hosts:</strong>
+      {% if ALLOWED_HOSTS %}
+        {{ ALLOWED_HOSTS|join:", " }}
+      {% else %}
+        (none)
+      {% endif %}
+    </li>
+    {# If you exposed more in the context processor, list them here:
+    <li class="list-group-item">
+      <strong>Installed Apps:</strong> {{ INSTALLED_APPS|join:", " }}
+    </li>
+    #}
+  </ul>
+{% endblock %}

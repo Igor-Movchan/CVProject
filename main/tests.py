@@ -1,8 +1,10 @@
-from django.test import TestCase
+from django.test import TestCase, RequestFactory
 from django.urls import reverse
 from .models import CV, RequestLog
 from rest_framework.test import APITestCase
 from rest_framework import status
+from main.context_processors import settings_context
+from django.conf import settings
 
 class CVViewTests(TestCase):
     def setUp(self):
@@ -121,3 +123,29 @@ class RequestLogTests(TestCase):
         content = response.content.decode()
         self.assertIn("/test/11/", content)
         self.assertNotIn("/test/0/", content)
+
+
+class ContextProcessorTests(TestCase):
+    def test_settings_context_contains_keys(self):
+        factory = RequestFactory()
+        request = factory.get("/")
+        context = settings_context(request)
+
+        self.assertIn("DJANGO_DEBUG", context)
+        self.assertEqual(context["DJANGO_DEBUG"], settings.DEBUG)
+
+        self.assertIn("ALLOWED_HOSTS", context)
+        self.assertEqual(context["ALLOWED_HOSTS"], settings.ALLOWED_HOSTS)
+
+class SettingsViewTests(TestCase):
+    def test_settings_page_renders(self):
+        url = reverse("settings")
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        content = response.content.decode()
+        self.assertIn(str(settings.DEBUG), content)
+        if not settings.ALLOWED_HOSTS:
+            self.assertIn("(none)", content)
+        else:
+            for host in settings.ALLOWED_HOSTS:
+                self.assertIn(host, content)

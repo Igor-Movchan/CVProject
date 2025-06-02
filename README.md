@@ -2,3 +2,4 @@
 - Loading Initial Data - python3 manage.py loaddata initial_cvs.json
 - Running Tests - python3 manage.py test
 - Logs under link /logs
+- Setting under link /settings
