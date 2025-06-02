@@ -15,12 +15,18 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from main.views import cv_list, cv_detail, cv_pdf
+from rest_framework import routers
+from main.api_views import CVViewSet
+
+router = routers.DefaultRouter()
+router.register(r"api/cvs", CVViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("", cv_list, name="cv_list"),
     path("cv/<int:pk>/", cv_detail, name="cv_detail"),
     path("cv/<int:pk>/pdf/", cv_pdf, name="cv_pdf"),
+    path("", include(router.urls)),
 ]
