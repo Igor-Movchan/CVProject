@@ -1,0 +1,14 @@
+[
+  {
+    "model": "main.cv",
+    "pk": 1,
+    "fields": {
+      "firstname": "Alice",
+      "lastname": "Smith",
+      "skills": "Python, Django, REST",
+      "projects": "Portfolio Website, Blog API",
+      "bio": "Full‐stack developer with 5 years’ experience…",
+      "contacts": "alice@example.com; +123456789"
+    }
+  }
+]

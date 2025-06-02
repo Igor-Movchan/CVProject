@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+  <h1>CVs</h1>
+  <ul>
+    {% for cv in cvs %}
+      <li>
+        <a href="{% url 'cv_detail' cv.id %}">
+          {{ cv.firstname }} {{ cv.lastname }}
+        </a>
+      </li>
+    {% empty %}
+      <li>No CV entries found.</li>
+    {% endfor %}
+  </ul>
+{% endblock %}

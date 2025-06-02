@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content %}
+  <h1>{{ cv.firstname }} {{ cv.lastname }}</h1>
+  <h2>Bio</h2>
+  <p>{{ cv.bio }}</p>
+  <h2>Skills</h2>
+  <p>{{ cv.skills }}</p>
+  <h2>Projects</h2>
+  <p>{{ cv.projects }}</p>
+  <h2>Contacts</h2>
+  <p>{{ cv.contacts }}</p>
+  <a href="{% url 'cv_list' %}">&larr; Back to list</a>
+{% endblock %}
