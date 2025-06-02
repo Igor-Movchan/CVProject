@@ -1,0 +1,33 @@
+{# main/templates/main/cv_detail_pdf.html #}
+{% extends "base.html" %}
+{% block title %}{{ cv.firstname }} {{ cv.lastname }} – PDF{% endblock %}
+
+{% block content %}
+  <div style="padding: 20px; max-width: 800px; margin: 0 auto;">
+    <h1 style="text-align: center; margin-bottom: 1em;">
+      {{ cv.firstname }} {{ cv.lastname }}
+    </h1>
+
+    <hr style="margin-bottom: 1.5em;">
+
+    <h2 style="margin-bottom: 0.5em;">Bio</h2>
+    <p style="margin-bottom: 1em; line-height: 1.4;">
+      {{ cv.bio }}
+    </p>
+
+    <h2 style="margin-bottom: 0.5em;">Skills</h2>
+    <p style="margin-bottom: 1em; line-height: 1.4;">
+      {{ cv.skills }}
+    </p>
+
+    <h2 style="margin-bottom: 0.5em;">Projects</h2>
+    <p style="margin-bottom: 1em; line-height: 1.4;">
+      {{ cv.projects }}
+    </p>
+
+    <h2 style="margin-bottom: 0.5em;">Contacts</h2>
+    <p style="margin-bottom: 1em; line-height: 1.4;">
+      {{ cv.contacts }}
+    </p>
+  </div>
+{% endblock %}
