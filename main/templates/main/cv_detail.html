@@ -1,13 +1,18 @@
 {% extends "base.html" %}
+{% block title %}{{ cv.firstname }} {{ cv.lastname }} – PDF{% endblock %}
 {% block content %}
-  <h1>{{ cv.firstname }} {{ cv.lastname }}</h1>
-  <h2>Bio</h2>
-  <p>{{ cv.bio }}</p>
-  <h2>Skills</h2>
-  <p>{{ cv.skills }}</p>
-  <h2>Projects</h2>
-  <p>{{ cv.projects }}</p>
-  <h2>Contacts</h2>
-  <p>{{ cv.contacts }}</p>
-  <a href="{% url 'cv_list' %}">&larr; Back to list</a>
+<div style="width: 100%; padding: 20px;">
+    <h1>{{ cv.firstname }} {{ cv.lastname }}</h1>
+    <h2>Bio</h2>
+    <p>{{ cv.bio }}</p>
+    <h2>Skills</h2>
+    <p>{{ cv.skills }}</p>
+    <h2>Projects</h2>
+    <p>{{ cv.projects }}</p>
+    <h2>Contacts</h2>
+    <p>{{ cv.contacts }}</p>
+    <a href="{% url 'cv_pdf' cv.id %}">
+        Download PDF
+    </a>
+</div>
 {% endblock %}
