@@ -3,6 +3,11 @@ from .models import CV
 from django.http import HttpResponse
 from django.template.loader import render_to_string
 import weasyprint
+from .models import RequestLog
+
+def recent_requests(request):
+    logs = RequestLog.objects.order_by("-timestamp")[:10]
+    return render(request, "main/logs.html", {"logs": logs})
 
 def cv_pdf(request, pk):
     # Fetch the CV instance or return 404

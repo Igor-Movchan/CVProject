@@ -1,6 +1,6 @@
 from django.test import TestCase
 from django.urls import reverse
-from .models import CV
+from .models import CV, RequestLog
 from rest_framework.test import APITestCase
 from rest_framework import status
 
@@ -79,3 +79,45 @@ class CVAPITest(APITestCase):
         response = self.client.delete(self.detail_url)
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
         self.assertFalse(CV.objects.filter(id=self.cv.id).exists())
+
+
+class RequestLogTests(TestCase):
+    def setUp(self):
+        CV.objects.create(
+            firstname="Log",
+            lastname="Tester",
+            skills="Django, Logging",
+            projects="Logging Project",
+            bio="Testing logging functionality",
+            contacts="log@test.com"
+        )
+
+    def test_request_logged_on_page_load(self):
+        self.assertEqual(RequestLog.objects.count(), 0)
+
+        response = self.client.get(reverse("cv_list"))
+        self.assertEqual(response.status_code, 200)
+
+        logs = RequestLog.objects.all()
+        self.assertEqual(logs.count(), 1)
+
+        log = logs.first()
+        self.assertEqual(log.method, "GET")
+        self.assertIn("/", log.path)
+        self.assertIsInstance(log.remote_ip, str)
+
+    def test_recent_requests_page_shows_latest_10(self):
+        for i in range(12):
+            RequestLog.objects.create(
+                method="GET",
+                path=f"/test/{i}/",
+                query_string="",
+                remote_ip="127.0.0.1"
+            )
+
+        response = self.client.get(reverse("recent_requests"))
+        self.assertEqual(response.status_code, 200)
+
+        content = response.content.decode()
+        self.assertIn("/test/11/", content)
+        self.assertNotIn("/test/0/", content)

@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from main.views import cv_list, cv_detail, cv_pdf
+from main.views import cv_list, cv_detail, cv_pdf, recent_requests
 from rest_framework import routers
 from main.api_views import CVViewSet
 
@@ -29,4 +29,5 @@ urlpatterns = [
     path("cv/<int:pk>/", cv_detail, name="cv_detail"),
     path("cv/<int:pk>/pdf/", cv_pdf, name="cv_pdf"),
     path("", include(router.urls)),
+    path("logs/", recent_requests, name="recent_requests"),
 ]
