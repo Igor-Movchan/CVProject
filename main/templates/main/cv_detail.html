@@ -1,18 +1,43 @@
 {% extends "base.html" %}
-{% block title %}{{ cv.firstname }} {{ cv.lastname }} – PDF{% endblock %}
+{% block title %}{{ cv.firstname }} {{ cv.lastname }}{% endblock %}
 {% block content %}
-<div style="width: 100%; padding: 20px;">
-    <h1>{{ cv.firstname }} {{ cv.lastname }}</h1>
-    <h2>Bio</h2>
-    <p>{{ cv.bio }}</p>
-    <h2>Skills</h2>
-    <p>{{ cv.skills }}</p>
-    <h2>Projects</h2>
-    <p>{{ cv.projects }}</p>
-    <h2>Contacts</h2>
-    <p>{{ cv.contacts }}</p>
-    <a href="{% url 'cv_pdf' cv.id %}">
-        Download PDF
-    </a>
+<div class="container py-4">
+  <h1>{{ cv.firstname }} {{ cv.lastname }}</h1>
+  <p><strong>Bio:</strong> {{ cv.bio }}</p>
+  <p><strong>Skills:</strong> {{ cv.skills }}</p>
+  <p><strong>Projects:</strong> {{ cv.projects }}</p>
+  <p><strong>Contacts:</strong> {{ cv.contacts }}</p>
+
+  <hr>
+
+  <!-- Download PDF -->
+  <a href="{% url 'cv_pdf' cv.id %}" class="btn btn-primary">
+    Download PDF
+  </a>
+
+  <!-- Email form -->
+  <form method="post" action="{% url 'send_cv_email' cv.id %}" class="mt-4">
+    {% csrf_token %}
+    <div class="form-group">
+      <label for="email">Send PDF to Email:</label>
+      <input
+        type="email"
+        name="email"
+        id="email"
+        class="form-control"
+        placeholder="recipient@example.com"
+        required
+      />
+    </div>
+    <button type="submit" class="btn btn-success mt-2">Send PDF</button>
+  </form>
+
+  {% if messages %}
+    {% for message in messages %}
+      <div class="alert alert-info mt-3">
+        {{ message }}
+      </div>
+    {% endfor %}
+  {% endif %}
 </div>
 {% endblock %}

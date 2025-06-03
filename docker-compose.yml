@@ -8,6 +8,11 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+
   web:
     build: .
     command: >
@@ -24,6 +29,19 @@ services:
       - .env
     depends_on:
       - db
+      - redis
+
+  celery:
+    build: .
+    command: >
+      sh -c "celery -A CVProject worker --loglevel=info"
+    volumes:
+      - .:/app
+    env_file:
+      - .env
+    depends_on:
+      - db
+      - redis
 
 volumes:
   postgres_data:
