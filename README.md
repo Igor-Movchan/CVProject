@@ -8,6 +8,6 @@
 
 Running instance:
 - Remove any old containers & anonymous volumes - docker compose down --volumes
-- Build fresh images and start both services in the background - docker compose up --build
+- Build fresh images and start both services - docker compose up --build
 
 - For OpenAI translation - fill YOUR_OPENAI_API_KEY
