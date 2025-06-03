@@ -12,3 +12,5 @@
 
 - Remove any old containers & anonymous volumes - docker compose down --volumes
 - Build fresh images and start both services in the background - docker compose up -d --build
+
+- For OpenAI translation - fill YOUR_OPENAI_API_KEY

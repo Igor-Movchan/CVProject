@@ -39,5 +39,30 @@
       </div>
     {% endfor %}
   {% endif %}
+  <hr>
+
+  <!-- Translation form -->
+  <h2 class="mt-4">Translate this CV</h2>
+  <form method="post" action="{% url 'cv_translate' cv.id %}">
+    {% csrf_token %}
+    <div class="form-group">
+      <label for="target_language">Choose a language:</label>
+      <select name="target_language" id="target_language" class="form-control" required>
+        <option value="" disabled selected>-- Select language --</option>
+        {% for code, name in translation_languages %}
+        <option value="{{ code }}">{{ name }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <button type="submit" class="btn btn-warning mt-2">Translate</button>
+  </form>
+
+  {% if translated_content %}
+  <hr>
+  <h3 class="mt-4">Translation ({{ selected_language_name }})</h3>
+  <div class="card p-3 mb-4">
+    {{ translated_content|linebreaks }}
+  </div>
+  {% endif %}
 </div>
 {% endblock %}
