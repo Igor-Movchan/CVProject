@@ -7,7 +7,8 @@
 - /settings/ displays your settings (DEBUG, ALLOWED_HOSTS, etc.)
 
 Running instance:
-- Remove any old containers & anonymous volumes - docker compose down --volumes
+- Clone repository, cd to its dir
 - Build fresh images and start both services - docker compose up --build
+- access website by http://0.0.0.0:8000
 
 - For OpenAI translation - fill YOUR_OPENAI_API_KEY
