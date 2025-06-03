@@ -1,9 +1,12 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from .models import CV
 from django.http import HttpResponse
 from django.template.loader import render_to_string
 import weasyprint
 from .models import RequestLog
+from django.urls import reverse
+from django.contrib import messages
+from .tasks import send_cv_pdf_via_email
 
 def recent_requests(request):
     logs = RequestLog.objects.order_by("-timestamp")[:10]
@@ -36,4 +39,12 @@ def cv_detail(request, pk):
 
 def settings_view(request):
     return render(request, "main/settings.html")
+
+def send_cv_email(request, pk):
+    if request.method == "POST":
+        email_address = request.POST.get("email")
+        send_cv_pdf_via_email.delay(pk, email_address)
+        messages.info(request, f"PDF will be emailed to {email_address}.")
+    return redirect(reverse("cv_detail", args=[pk]))
+
 
