@@ -6,6 +6,8 @@
 - /logs/ shows recent requests (no errors)
 - /settings/ displays your settings (DEBUG, ALLOWED_HOSTS, etc.)
 
+- poetry install - sudo apt install python3-poetry
+- loading dependencies - poetry install
 - Starting server - python3 manage.py runserver
 - Loading Initial Data - python3 manage.py loaddata initial_cvs.json
 - Running Tests - python3 manage.py test
